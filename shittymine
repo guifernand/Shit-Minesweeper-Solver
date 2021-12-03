@@ -1,0 +1,7 @@
+import selenium
+
+#abrir com o Chrome
+driver=webdriver.Chrome()
+
+#abrir o site
+driver.get('https://minesweeperonline.com')
