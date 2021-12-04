@@ -1,7 +1,38 @@
-import selenium
+from selenium import webdriver
+from selenium.webdriver.common.keys import Keys
+import random
 
-#abrir com o Chrome
-driver=webdriver.Chrome()
+class square:
+    value=                              #0:aberto sem nada adjacente;-1:flag;1-8: bombas adjacentes
+    subtract=
+
+
+def solver():
+    #selecionar primeiro square id="x_y"
+    x=random.randint(1,16)
+    y=random.randint(1,30)
+
+    id=str(x)+"_"+str(y)
+
+    first=driver.find_element_by_id(id) #necessario garantir que o first ja n esta aberto (por causa da recursão)
+
+    #click no first
+    #update dos valores no squares abertos
+    #enontrar um 1 num canto
+    #dar flag nele (retirando ao valor do total de bombas) e retirar 1 a cada square adjacente (possivelmente necessario criar uma class para os squares com os seus valores que vao sendo atualizados e com o valor a reirar proveninete de bombas adjacentes)
+    #repete se o processo varias vezes, se n encontrar um 1 num canto entao voltar a chamar a funcao solver (recusao) de forma a obter um novo first
+
+
+
+    while face!=facedead && bombas>=0:
+
+#abrir o browser
+driver=webdriver.Firefox()
 
 #abrir o site
 driver.get('https://minesweeperonline.com')
+
+solver()
+
+
+return element.get_attribute("class")
