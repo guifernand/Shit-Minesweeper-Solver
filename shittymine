@@ -1,10 +1,12 @@
 from selenium import webdriver
+from selenium.webdriver.common.by import By
 from selenium.webdriver.common.keys import Keys
 import random
+from selenium.webdriver.common.action_chains import ActionChains
 
-class square:
-    value=                              #0:aberto sem nada adjacente;-1:flag;1-8: bombas adjacentes
-    subtract=
+#class square:
+    #value=                              #0:aberto sem nada adjacente;-1:flag;1-8: bombas adjacentes
+    #subtract=
 
 
 def solver():
@@ -13,18 +15,25 @@ def solver():
     y=random.randint(1,30)
 
     id=str(x)+"_"+str(y)
+    print(id)
+    args=(By.ID, id)
+    first=driver.find_element(*args) #necessario garantir que o first ja n esta aberto (por causa da recursão)
 
-    first=driver.find_element_by_id(id) #necessario garantir que o first ja n esta aberto (por causa da recursão)
-
-    #click no first
+    #clicka no first
+    actions=ActionChains(driver)
+    actions.move_to_element(first).click()
+    actions.perform()
+    
     #update dos valores no squares abertos
     #enontrar um 1 num canto
     #dar flag nele (retirando ao valor do total de bombas) e retirar 1 a cada square adjacente (possivelmente necessario criar uma class para os squares com os seus valores que vao sendo atualizados e com o valor a reirar proveninete de bombas adjacentes)
     #repete se o processo varias vezes, se n encontrar um 1 num canto entao voltar a chamar a funcao solver (recusao) de forma a obter um novo first
 
+    #while face!=facedead && bombas>=0:
 
 
-    while face!=facedead && bombas>=0:
+
+        #solver()
 
 #abrir o browser
 driver=webdriver.Firefox()
@@ -35,4 +44,4 @@ driver.get('https://minesweeperonline.com')
 solver()
 
 
-return element.get_attribute("class")
+#return element.get_attribute("class")
