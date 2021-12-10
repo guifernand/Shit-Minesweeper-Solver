@@ -12,9 +12,9 @@ max_col=30
 #class base da matriz que representa o tabuleiro do jogo
 class square:
     def __init__(self):
-        value=-1                              #-1:valor de inicialização(square por abrir);0:aberto sem nada adjacente;1-8: bombas adjacentes
-        subtract=0
-        flag=False                            #True-Falgged; False-not Flaggged
+        self.value=-1                              #-1:valor de inicialização(square por abrir);0:aberto sem nada adjacente;1-8: bombas adjacentes
+        self.subtract=0
+        self.flag=False                            #True-Falgged; False-not Flaggged
 
 #da update da matriz squares(representa o tabuleiro de jogo em valores numericos)
 def update(squares):
