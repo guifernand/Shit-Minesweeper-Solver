@@ -5,27 +5,34 @@ import random
 from selenium.webdriver.common.action_chains import ActionChains
 import re
 
-#class square:
-    #value=                              #0:aberto sem nada adjacente;-1:flag;1-8: bombas adjacentes
-    #subtract=
+bombs=99              #usar global para alterar estas variaveis dentro de funcoes
+max_lin=16
+max_col=30
 
+#class base da matriz que representa o tabuleiro do jogo
+class square:
+    def __init__(self):
+        value=-1                              #-1:valor de inicialização(square por abrir);0:aberto sem nada adjacente;1-8: bombas adjacentes
+        subtract=0
+        flag=False                            #True-Falgged; False-not Flaggged
 
+#da update da matriz squares(representa o tabuleiro de jogo em valores numericos)
 def update(squares):
-    for l in 16:
-        for c in 30:
+    for l in range(1,max_lin+1):   #nao esquecer que para a matriz tera que ser l-1 para começar em 0, o mesmo para o c <--------------------
+        for c in range(1,max_col+1):
             id=str(l)+"_"+str(c)
             args=(By.ID, id)
             element=driver.find_element(*args)
-            val_sq=element.get_attribute("class")
-            squares.value=re.sub("\D", "", val_sq)
+            val_sq=element.get_attribute("class")                 #obtem o argumento referente ao valor que o square apresenta
+            if val_sq!="square blank":
+                squares[l-1][c-1].value=re.sub("\D", "", val_sq)     #retira apenas a parte numerica do argumento do square e mete na matriz (se demorar muito tempo podera ser possivel verificar se o valor novo e diferente do ja presente na matriz mas n sei se ajuda muito)
+
+#def maxProb(squares):
 
 
 
 #variave iter indica se se trata da primiera iteracão (iter=1) ou nãp (iter=0)
 def solver(iter):
-
-    max_lin=16
-    max_col=30
 
     #selecionar primeiro square id="x_y"
     x=random.randint(1,max_lin)
@@ -37,8 +44,11 @@ def solver(iter):
 
     if iter==1:
         first=driver.find_element(*args) #necessario garantir que o first ja n esta aberto (por causa da recursão)
-        squares=[[-1]*max_col]*max_lin   #inicializa a lista na primeira iteracão (tenho que mudar para que inicialize logo com a class)
-        print(str(squares))
+        squares=[[-1]*max_col]*max_lin   #inicializa a lista na primeira iteracão
+        for L in range(0,max_lin):
+            for C in range(0,max_col):
+                squares[L][C]=square()
+
     else:
         if condition:
             pass
@@ -50,6 +60,10 @@ def solver(iter):
 
     #update dos valores no squares abertos
     update(squares)
+
+    for L in range(0,max_lin):
+        for C in range(0,max_col):
+            print(squares[L][C].value)
     #enontrar um 1 num canto
     #dar flag nele (retirando ao valor do total de bombas) e retirar 1 a cada square adjacente (possivelmente necessario criar uma class para os squares com os seus valores que vao sendo atualizados e com o valor a reirar proveninete de bombas adjacentes)
     #repete se o processo varias vezes, se n encontrar um 1 num canto entao voltar a chamar a funcao solver (recusao) de forma a obter um novo first
