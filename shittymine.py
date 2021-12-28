@@ -23,10 +23,17 @@ def update(squares):
             id=str(l)+"_"+str(c)
             args=(By.ID, id)
             element=driver.find_element(*args)
-            val_sq=element.get_attribute("class")                 #obtem o argumento referente ao valor que o square apresenta
+            val_sq=element.get_attribute("class")                    #obtem o argumento referente ao valor que o square apresenta
             if val_sq!="square blank":
                 squares[l-1][c-1].value=re.sub("\D", "", val_sq)     #retira apenas a parte numerica do argumento do square e mete na matriz (se demorar muito tempo podera ser possivel verificar se o valor novo e diferente do ja presente na matriz mas n sei se ajuda muito)
-
+            if val_sq=="square bombflagged":
+                squares[][].subtract+=1
+                squares[][].subtract+=1
+                squares[][].subtract+=1
+                squares[][].subtract+=1
+                squares[][].subtract+=1
+                squares[][].subtract+=1
+                squares[][].subtract+=1
 
 #encontra na matriz os squares abertos que têm squares adjacentes por abrir que verifiquem self.value/(squares por if x!=l && y!=c && squares[x][y].value==-1 && squares[x][y].flag==False:
 #not_open_adj+=1;abrir adjacentes) =1 indicando que estes contem bomba e tem de ser flagged (self.flag=TRUE e bombs-=1)
@@ -34,7 +41,7 @@ def maxProb(squares,l,c):  #(n sei se deve ser l ou l-1 e c ou c-1) porvavelment
     x=l-1;                 #tem que se ter global bombas-=1
     y=c-1;
 
-    toti_bomba=squares[l][c].value-squares[l][c].subtract; #é preciso subtract?!
+    toti_bomba=squares[l][c].value-squares[l][c].subtract;
 
     not_open_adj=0;
     while x<=(l+1):
@@ -43,9 +50,11 @@ def maxProb(squares,l,c):  #(n sei se deve ser l ou l-1 e c ou c-1) porvavelment
                 not_open_adj+=1;
             c+=1
         x+=1
+
     #condicao para toti_bomb>0?
     prob=not_open_adj/toti_bomba;
 
+    
 
 #obter o numero de bombas ainda por detetar, ou seja, sera o value do square - o numero de flagged squares adjacentes
 def realvalue(squares):
@@ -91,8 +100,6 @@ def solver(iter):
             pass
         pass
 
-
-
     for L in range(0,max_lin):
         for C in range(0,max_col):
             print(squares[L][C].value)
@@ -104,11 +111,14 @@ def solver(iter):
     #while face!=facedead && bombas>=0:
 
         #maxProb
-        #abrir os com realvalue=0 && value!=0 para n tar a abrir squares no meio do nada
-        #update(squares)
-        #realvalue(squares)
-        #solver(0)
-        #face=
+        #if newbombs(saida de maxProb que indica novas bombas foram encontradas)!=0 (indica que n se encontrou)
+            #solver(0)
+        #else
+            #abrir os com realvalue=0 && value!=0 para n tar a abrir squares no meio do nada
+            #update(squares)
+            #face=
+
+
 
 #abrir o browser
 driver=webdriver.Firefox()
