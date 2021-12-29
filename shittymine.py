@@ -24,9 +24,9 @@ def update(squares):
             args=(By.ID, id)
             element=driver.find_element(*args)
             val_sq=element.get_attribute("class")                    #obtem o argumento referente ao valor que o square apresenta
-            if val_sq!="square blank":
+            if val_sq!="square blank" && val_sq!="square bombflagged":
                 squares[l-1][c-1].value=re.sub("\D", "", val_sq)     #retira apenas a parte numerica do argumento do square e mete na matriz (se demorar muito tempo podera ser possivel verificar se o valor novo e diferente do ja presente na matriz mas n sei se ajuda muito)
-            if val_sq=="square bombflagged":
+            else if val_sq=="square bombflagged":
                 squares[][].subtract+=1
                 squares[][].subtract+=1
                 squares[][].subtract+=1
@@ -54,16 +54,6 @@ def maxProb(squares,l,c):  #(n sei se deve ser l ou l-1 e c ou c-1) porvavelment
     #condicao para toti_bomb>0?
     prob=not_open_adj/toti_bomba;
 
-    
-
-#obter o numero de bombas ainda por detetar, ou seja, sera o value do square - o numero de flagged squares adjacentes
-def realvalue(squares):
-
-    for l in range(max_lin):
-        for c in range(max_col):
-            if squares[l][c].value!=-1 && squares[l][c].value!=0:
-                    while x<=(l+1):
-                        while y<=(c+1):
 
 #variave iter indica se se trata da primiera iteracão (iter=1) ou não (iter=0)
 def solver(iter):
@@ -113,12 +103,11 @@ def solver(iter):
         #maxProb
         #if newbombs(saida de maxProb que indica novas bombas foram encontradas)!=0 (indica que n se encontrou)
             #solver(0)
+            #return
         #else
             #abrir os com realvalue=0 && value!=0 para n tar a abrir squares no meio do nada
             #update(squares)
             #face=
-
-
 
 #abrir o browser
 driver=webdriver.Firefox()
@@ -128,10 +117,9 @@ driver.get('https://minesweeperonline.com')
 
 solver(1)
 
+#..............................................................
 
 #return element.get_attribute("class")
-
-#..............................................................
 
 # 1 passo- abrir o primeiro squares
 # 2 passo- update dos valores da grid
@@ -139,3 +127,14 @@ solver(1)
 # 4 passo- baseado no passo anterior dar flag aos devidos squares
 # 5 passo- fazer o realvalue dos squares
 # 6 passo- abrir os squares que ficam com 0 de realvalue
+
+#----------------------------------------------------------------
+
+#obter o numero de bombas ainda por detetar, ou seja, sera o value do square - o numero de flagged squares adjacentes
+def realvalue(squares):
+
+    for l in range(max_lin):
+        for c in range(max_col):
+            if squares[l][c].value!=-1 && squares[l][c].value!=0:
+                    while x<=(l+1):
+                        while y<=(c+1):
